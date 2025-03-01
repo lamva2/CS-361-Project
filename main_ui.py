@@ -70,7 +70,6 @@ def help_resources():
     print("Creator Contact: Valerie Lam - lamva@oregonstate.edu", "\n")
     user_input = input("Would you like to enter the home page (1-yes, 0-no): ")
     return user_input
-    
 
 terminal_width = os.get_terminal_size().columns
 program_name = "❆ SnowStorm ❆".center(terminal_width)
