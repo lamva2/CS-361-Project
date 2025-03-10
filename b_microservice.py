@@ -38,7 +38,7 @@ while True:
         print("Generating graph.")
         
         # Bar Chart
-        if message == "1":
+        if message == "bar chart":
             plt.bar(x,y)
             plt.title(title)
             plt.xlabel(x_label)
@@ -47,7 +47,7 @@ while True:
             plt.tight_layout()
             plt.savefig(custom_visual)
         # Line Graph
-        elif message == "2":
+        elif message == "line graph":
             plt.plot(x, y)
             plt.title(title)
             plt.xlabel(x_label)
@@ -56,7 +56,7 @@ while True:
             plt.tight_layout()
             plt.savefig(custom_visual)
         # Scatter Plot
-        elif message == "3":
+        elif message == "scatter plot":
             plt.scatter(x, y)
             plt.title(title)
             plt.xlabel(x_label)
