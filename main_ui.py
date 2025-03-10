@@ -14,7 +14,7 @@ def page_input_validation():
         if user_input in valid_choices:
             return int(user_input)
         else:
-            print("Invalid input. Please enter a number between 0 and 5.\n")
+            print("Invalid input. Please enter a number between 0 and 5.")
 
 def exit_page_validation(question):
     valid_choices = {'0', '1'}
@@ -33,7 +33,7 @@ def visualization_validation(question):
         if user_input in valid_choices:
             return user_input
         else:
-            print("Invalid input. Please enter bar chart, line graph, or scatter plot.\n")
+            print("Invalid input. Please enter bar chart, line graph, or scatter plot.")
             
 def note_validation(question):
     valid_choices = {'0', '1', '2'}
@@ -48,7 +48,6 @@ def search_term():
     while True:
         print("Visualization options: Bar chart, Line graph, Scatter plot")
         term = input("Please enter the visualization style you would like to learn about: ")
-        print("\n")
         socket1.send_string(term)
         definition = socket1.recv_string()
         print(f"Definition: {definition}")
@@ -61,7 +60,6 @@ def generate_visual():
         print("Visualization options: bar chart, line graph, scatter plot")
         visualization_style = visualization_validation("Please enter your visualization style: ")
         ask_again = exit_page_validation(f"Running data analysis will create a {visualization_style}. Are you sure you would like to continue (1-yes, 0-no): ")
-        print("\n")
         if ask_again == 1:
             socket2.send_string(visualization_style)
             graph_path = socket2.recv_string()
@@ -184,7 +182,7 @@ def example_visuals():
 def data_analysis():
     print('-' * terminal_width)
     print("Data Analysis".center(terminal_width), "\n")
-    print("Now it's your turn! Build your own visualization by picking your plotting style.\n")
+    print("Now it's your turn! Build your own visualization of total snowfall data over time by picking your plotting style.\n")
     search_input = exit_page_validation("Would you like to learn more about the plotting style options? (1-yes, 0-no): ")
     if search_input == 1:
         search_term()
@@ -280,7 +278,8 @@ print(logo5)
 print(logo6)
 print(program_name, "\n")
 print()
-print("Welcome to SnowStorm, a CLI program to create customizable visualizations of snowstorms in NW Oregon and SW Washington by choosing your variables & plotting style.\n")
+print("Welcome to SnowStorm, a CLI program to create customizable visualizations of snowstorms in NW Oregon and SW Washington by choosing your plotting style.\n")
+print("The progam also contains features to learn about different plotting styles, add/view/delete your notes, and ask questions about data analyis.")
 
 user_input = int(home_page())
 while True:
@@ -299,17 +298,12 @@ while True:
 
 clear_file()        # Clears notes.json file
 # Quit servers
-print("Microservice A exiting...")
 socket1.send_string("exit")
 socket1.close()
-print("Microservice A exiting...")
-print("Microservice B exiting...")
 socket2.send_string("exit")
 socket2.close()
-print("Microservice B exiting...")
 socket3.send_string("exit")
 socket3.close()
-print("Microservice D exiting...")
 socket4.send_string("exit")
 socket4.close()
 context.destroy()   # Destroys context
