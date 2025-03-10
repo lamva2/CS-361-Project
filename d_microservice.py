@@ -10,7 +10,7 @@ from datetime import datetime
 
 context = zmq.Context()
 socket = context.socket(zmq.REP)
-socket.bind("tcp://*:5555")
+socket.bind("tcp://*:5558")
 
 while True:
     message = socket.recv_string()

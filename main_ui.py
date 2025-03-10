@@ -107,6 +107,37 @@ def delete_notes():
         if page_input == 0:
             break
 
+def view_notes():
+    print("Printing notes in the form 'date: note'...")
+    with open('notes.json', 'r') as file:
+        data = json.load(file)
+    for item in data:
+        print(f"{item['date']}: {item['note']}")
+   
+def add_questions():
+    while True:
+        file = "questions.json"
+        note = input("Write your question: ")
+        data = {
+            "file": file,
+            "note": note
+        }
+        ask_again = exit_page_validation("Your question will be posted to the questions.json file to be answered by the admin. Are you sure you would like to do this? (1-yes, 0-no): ")
+        if ask_again == 1:
+            message = json.dumps(data)
+            socket4.send_string(message)
+            is_added = socket4.recv_string()
+            if is_added == "True":
+                print("Question added successfully and will be answered within 2 weeks.")
+            else:
+                print("Error while adding question to file.")
+        page_input = exit_page_validation("Would you like to add another question (1-yes, 0-no): ")
+        if page_input == 0:
+            break    
+
+def clear_file():
+    with open('notes.json', 'w') as file:
+        json.dump([], file)       
 #####################################################################################################################
 # PAGE FUNCTIONS
     
@@ -189,7 +220,6 @@ def notes():
         # Notes option
         return 3
     
-
 def help_resources():
     print('-' * terminal_width)
     print("Help & Resources".center(terminal_width), "\n")
@@ -204,8 +234,16 @@ def help_resources():
     print("NOAA National Weather Service: https://www.weather.gov/")
     print("\n")
     print("Creator Contact: Valerie Lam - lamva@oregonstate.edu", "\n")
-    user_input = input("Would you like to enter the home page (1-yes, 0-no): ")
-    return user_input
+    question_input = exit_page_validation("Would you like to add a question (1-yes, 0-no): ")
+    if question_input == 1:
+        add_questions()
+    page_input = exit_page_validation("Would you like to return to the home page (1-yes, 0-no): ")
+    if page_input == 1:
+        # Home page option
+        return 0
+    else:
+        # Help and Resources option
+        return 4
 
 # Set up environment
 context = zmq.Context()
@@ -257,6 +295,8 @@ while True:
     elif user_input == 5:
         break
 
+clear_file()        # Clears notes.json file
+context.destroy()   # Destroys context
             
     
         
