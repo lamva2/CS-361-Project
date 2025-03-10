@@ -105,7 +105,7 @@ def delete_notes():
                 print("Note deleted successfully.")
             else:
                 print("Error while deleting file.")
-        page_input = exit_page_validation("Would you like to add another note (1-yes, 0-no): ")
+        page_input = exit_page_validation("Would you like to delete another note (1-yes, 0-no): ")
         if page_input == 0:
             break
 
@@ -299,14 +299,19 @@ while True:
 
 clear_file()        # Clears notes.json file
 # Quit servers
+print("Microservice A exiting...")
 socket1.send_string("exit")
-socket1.recv_string()
+socket1.close()
+print("Microservice A exiting...")
+print("Microservice B exiting...")
 socket2.send_string("exit")
-socket2.recv_string()
+socket2.close()
+print("Microservice B exiting...")
 socket3.send_string("exit")
-socket3.recv_string()
+socket3.close()
+print("Microservice D exiting...")
 socket4.send_string("exit")
-socket4.recv_string()
+socket4.close()
 context.destroy()   # Destroys context
             
     

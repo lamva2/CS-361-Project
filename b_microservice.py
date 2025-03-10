@@ -15,12 +15,16 @@ socket = context.socket(zmq.REP)
 socket.bind("tcp://*:5556")
 
 while True:
-    message = socket.recv_string()
-    print(f"Received request from the client: {message}")
-    
-    if len(message) > 0 and message != "exit":
-        print("Message Recieved: %s\n" % message)
+    try:
+        message = socket.recv_string()
+        print(f"Received request from the client: {message}")
 
+        if len(message) > 0:
+            print("Message Recieved: %s\n" % message)
+            
+        if message == "exit":
+            break
+        
         # Data Frame
         data = pd.read_csv("C:\\Users\\vlam3\\OneDrive\\Desktop\\CS 361\\CS-361-Project\\snow_data.csv")
         df = pd.DataFrame(data)
@@ -70,8 +74,10 @@ while True:
         
         print("Path to custom visual sent to client.")
         socket.send_string(custom_visual) 
-    else:
-        break
     
+    except zmq.ZMQError as e:
+        print(f"Error encountered while trying to send/receive: {e}")
+        break
+
 context.destroy()
     
