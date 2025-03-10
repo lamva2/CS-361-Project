@@ -15,12 +15,11 @@ socket = context.socket(zmq.REP)
 socket.bind("tcp://*:5555")
 
 while True:
-    message = socket.recv()
-    print(f"Received request from the client: {message.decode()}")
+    message = socket.recv_string()
+    print(f"Received request from the client: {message}")
     
-    if len(message) > 0 and message.decode() != "exit":
-        print("Message Recieved: %s\n" % message.decode())
-        visualization = message.decode()
+    if len(message) > 0 and message != "exit":
+        print("Message Recieved: %s\n" % message)
 
         # Data Frame
         data = pd.read_csv("C:\\Users\\vlam3\\OneDrive\\Desktop\\CS 361\\CS-361-Project\\snow_data.csv")
@@ -36,8 +35,10 @@ while True:
         x_label = "Date"
         y_label = "Total Snowfall (inch)"
         
+        print("Generating graph.")
+        
         # Bar Chart
-        if visualization == "1":
+        if message == "1":
             plt.bar(x,y)
             plt.title(title)
             plt.xlabel(x_label)
@@ -45,10 +46,8 @@ while True:
             plt.xticks(rotation=45, ha='right')
             plt.tight_layout()
             plt.savefig(custom_visual)
-            #plt.show()
-            break
         # Line Graph
-        elif visualization == "2":
+        elif message == "2":
             plt.plot(x, y)
             plt.title(title)
             plt.xlabel(x_label)
@@ -56,10 +55,8 @@ while True:
             plt.xticks(rotation=45, ha='right')
             plt.tight_layout()
             plt.savefig(custom_visual)
-            #plt.show()
-            break
         # Scatter Plot
-        elif visualization == "3":
+        elif message == "3":
             plt.scatter(x, y)
             plt.title(title)
             plt.xlabel(x_label)
@@ -67,9 +64,8 @@ while True:
             plt.xticks(rotation=45, ha='right')
             plt.tight_layout()
             plt.savefig(custom_visual)
-            #plt.show()#
-            break
-    
+        
+        print("Path to custom visual sent to client.")
         socket.send_string(custom_visual) 
     else:
         break
