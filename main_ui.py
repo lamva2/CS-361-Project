@@ -1,5 +1,6 @@
 import zmq
 import os
+import json
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
@@ -33,6 +34,15 @@ def visualization_validation(question):
             return user_input
         else:
             print("Invalid input. Please enter bar chart, line graph, or scatter plot: ")
+            
+def note_validation(question):
+    valid_choices = {'0', '1', '2'}
+    user_input = input(question)
+    while True:
+        if user_input in valid_choices:
+            return user_input
+        else:
+            print("Invalid input. Please enter 0, 1, or 2: ")
 
 def search_term():
     while True:
@@ -58,6 +68,22 @@ def generate_visual():
             plt.imshow(graph)
             plt.show()
         page_input = exit_page_validation("Would you like to generate another visualization (1-yes, 0-no): ")
+        if page_input == 0:
+            break
+
+def add_notes():
+    while True:
+        file = "notes.json"
+        note = input("Write your notes: ")
+        data = {
+            "file": file,
+            "note": note
+        }
+        ask_again = exit_page_validation(f"Running data analysis will create a {visualization_style}. Are you sure you would like to continue (1-yes, 0-no): ")
+        message = json.dumps(data)
+        socket4.send_string(message)
+        socket4.recv_string()
+        page_input = exit_page_validation("Would you like to add another note (1-yes, 0-no): ")
         if page_input == 0:
             break
 
@@ -120,8 +146,29 @@ def data_analysis():
         # Data Analysis option
         return 2
 
+# Notes Page
+# Functionality:
+# 1. delete notes based on date entry
+# 2. add notes
 def notes():
-    print("Notes page")
+    print('-' * terminal_width)
+    print("My Notes".center(terminal_width), "\n")
+    print("Here is a space for you to write, delete, and view any notes from your analysis!")
+    note_input = note_validation("Would you like to add (0), delete (1), or view (2) your notes? ")
+    if note_input == 0:
+        add_notes()
+    elif note_input == 1:
+        delete_notes()
+    elif note_input == 2:
+        view_notes()
+    page_input = exit_page_validation("Would you like to return to the home page (1-yes, 0-no): ")
+    if page_input == 1:
+        # Home page option
+        return 0
+    else:
+        # Notes option
+        return 3
+    
 
 def help_resources():
     print('-' * terminal_width)
