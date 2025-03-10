@@ -39,6 +39,7 @@ while True:
         
         # Bar Chart
         if message == "bar chart":
+            plt.figure()
             plt.bar(x,y)
             plt.title(title)
             plt.xlabel(x_label)
@@ -48,6 +49,7 @@ while True:
             plt.savefig(custom_visual)
         # Line Graph
         elif message == "line graph":
+            plt.figure()
             plt.plot(x, y)
             plt.title(title)
             plt.xlabel(x_label)
@@ -57,6 +59,7 @@ while True:
             plt.savefig(custom_visual)
         # Scatter Plot
         elif message == "scatter plot":
+            plt.figure()
             plt.scatter(x, y)
             plt.title(title)
             plt.xlabel(x_label)

@@ -40,5 +40,4 @@ while True:
         print(f"Error encountered while trying to send/receive: {e}")
         break
 
-print("Goodbye!\n")
 context.destroy()

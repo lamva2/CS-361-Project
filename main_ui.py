@@ -14,52 +14,54 @@ def page_input_validation():
         if user_input in valid_choices:
             return int(user_input)
         else:
-            print("Invalid input. Please enter a number between 0 and 5: ")
+            print("Invalid input. Please enter a number between 0 and 5.\n")
 
 def exit_page_validation(question):
     valid_choices = {'0', '1'}
-    user_input = input(question)
     while True:
+        user_input = input(question)
         if user_input in valid_choices:
             return int(user_input)
         else:
-            print("Invalid input. Please enter either 1-yes or 0-no: ")
+            print("Invalid input. Please enter either 1-yes or 0-no.")
 
 def visualization_validation(question):
     valid_choices = {'bar chart', 'line graph', 'scatter plot'}
-    user_input = input(question)
-    user_input = user_input.lower()
     while True:
+        user_input = input(question)
+        user_input = user_input.lower()
         if user_input in valid_choices:
             return user_input
         else:
-            print("Invalid input. Please enter bar chart, line graph, or scatter plot: ")
+            print("Invalid input. Please enter bar chart, line graph, or scatter plot.\n")
             
 def note_validation(question):
     valid_choices = {'0', '1', '2'}
-    user_input = input(question)
     while True:
+        user_input = input(question)
         if user_input in valid_choices:
-            return user_input
+            return int(user_input)
         else:
-            print("Invalid input. Please enter 0, 1, or 2: ")
+            print("Invalid input. Please enter 0, 1, or 2.")
 
 def search_term():
     while True:
         print("Visualization options: Bar chart, Line graph, Scatter plot")
         term = input("Please enter the visualization style you would like to learn about: ")
+        print("\n")
         socket1.send_string(term)
         definition = socket1.recv_string()
-        print(definition)
+        print(f"Definition: {definition}")
         page_input = exit_page_validation("Would you like to search for another term (1-yes, 0-no): ")
         if page_input == 0:
             break
 
 def generate_visual():
     while True:
-        print("Visualization options: bar chart, line graph, scatter plot\n")
+        print("Visualization options: bar chart, line graph, scatter plot")
         visualization_style = visualization_validation("Please enter your visualization style: ")
         ask_again = exit_page_validation(f"Running data analysis will create a {visualization_style}. Are you sure you would like to continue (1-yes, 0-no): ")
+        print("\n")
         if ask_again == 1:
             socket2.send_string(visualization_style)
             graph_path = socket2.recv_string()
@@ -148,8 +150,8 @@ def home_page():
     print("Page Options:")
     print("0. Home Page: view your page options")
     print("1. Example Visuals: view example visuals we've made!")
-    print("2. Data Analysis: select your variables and plots to create your own visualizations!")
-    print("3. Notes: save or delete your analysis notes here!")
+    print("2. Data Analysis: select your plotting style to create your own visualizations of snowstorm data!")
+    print("3. Notes: view, add, or delete your analysis notes here!")
     print("4. Help & Resources: have questions? Look here!") 
     print("5. Exit the Program: closes the program") 
     page_input = page_input_validation()
@@ -157,7 +159,7 @@ def home_page():
 
 def example_visuals():
     print('-' * terminal_width)
-    print("Example visuals".center(terminal_width), "\n")
+    print("Example Visuals".center(terminal_width), "\n")
     print("Here are some of our favorite visualizations! Feel free to take notes on trends you notice.")
     print("Visual 1: Total Snowfall Over Time")
     print("Variables observed: Total Snowfall (inches), Storm Dates")
@@ -296,6 +298,15 @@ while True:
         break
 
 clear_file()        # Clears notes.json file
+# Quit servers
+socket1.send_string("exit")
+socket1.recv_string()
+socket2.send_string("exit")
+socket2.recv_string()
+socket3.send_string("exit")
+socket3.recv_string()
+socket4.send_string("exit")
+socket4.recv_string()
 context.destroy()   # Destroys context
             
     
