@@ -39,6 +39,10 @@ def data_analysis():
     print('-' * terminal_width)
     print("Data Analysis".center(terminal_width), "\n")
     print("Now it's your turn! Build your own visualization by picking your variables & plotting style.\n")
+    # Graph options
+    # 1. Total Snowfall vs Date ("1 visualization")
+    # 2. Snowfall for specific city over time "city visualization"
+    # 3. Snowfall in different cities over time "3 visualization"
     print("Variable options:")
     print("(1) Snowstorm (2) Location (3) Latitude/Longitude (4) Forecast Zone (5) Elevation Zone (6) Snowfall Totals\n")
     x_variable = input("Please select your x variable: ")
