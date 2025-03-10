@@ -79,10 +79,30 @@ def add_notes():
             "file": file,
             "note": note
         }
-        ask_again = exit_page_validation(f"Running data analysis will create a {visualization_style}. Are you sure you would like to continue (1-yes, 0-no): ")
-        message = json.dumps(data)
-        socket4.send_string(message)
-        socket4.recv_string()
+        ask_again = exit_page_validation("Your note will be added to the notes.json file. Are you sure you would like to do this? (1-yes, 0-no): ")
+        if ask_again == 1:
+            message = json.dumps(data)
+            socket4.send_string(message)
+            is_added = socket4.recv_string()
+            if is_added == "True":
+                print("Note added successfully")
+            else:
+                print("Error while adding notes to file.")
+        page_input = exit_page_validation("Would you like to add another note (1-yes, 0-no): ")
+        if page_input == 0:
+            break
+
+def delete_notes():
+    while True:
+        date = input("Enter the date of the note entry you would like to delete (in the form YYYY-MM-DD): ")
+        ask_again = exit_page_validation("Your note will be deleted from notes.json file. Are you sure you would like to do this? (1-yes, 0-no): ")
+        if ask_again == 1:
+            socket3.send_string(date)
+            is_deleted = socket3.recv_string()
+            if is_deleted == "True":
+                print("Note deleted successfully.")
+            else:
+                print("Error while deleting file.")
         page_input = exit_page_validation("Would you like to add another note (1-yes, 0-no): ")
         if page_input == 0:
             break
