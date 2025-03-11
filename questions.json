@@ -1,1 +1,14 @@
-[]
+[
+    {
+        "date": "2025-03-10",
+        "note": "what to do"
+    },
+    {
+        "date": "2025-03-10",
+        "note": "how do I do data analysis?"
+    },
+    {
+        "date": "2025-03-10",
+        "note": "How to work?"
+    }
+]

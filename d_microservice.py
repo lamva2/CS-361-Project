@@ -46,10 +46,8 @@ while True:
             
         except FileNotFoundError:
             print("File not found.")
-            break
         except json.JSONDecodeError:
             print("Error decording JSON in file.")
-            break 
     else:
         break
     

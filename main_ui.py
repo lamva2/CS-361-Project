@@ -50,7 +50,7 @@ def search_term():
         term = input("Please enter the visualization style you would like to learn about: ")
         socket1.send_string(term)
         definition = socket1.recv_string()
-        print(f"Definition: {definition}")
+        print(f"Definition: {definition}\n")
         page_input = exit_page_validation("Would you like to search for another term (1-yes, 0-no): ")
         if page_input == 0:
             break
@@ -58,7 +58,7 @@ def search_term():
 def generate_visual():
     while True:
         print("Visualization options: bar chart, line graph, scatter plot")
-        visualization_style = visualization_validation("Please enter your visualization style: ")
+        visualization_style = visualization_validation("Please enter your visualization style: \n")
         ask_again = exit_page_validation(f"Running data analysis will create a {visualization_style}. Are you sure you would like to continue (1-yes, 0-no): ")
         if ask_again == 1:
             socket2.send_string(visualization_style)
@@ -74,7 +74,7 @@ def generate_visual():
 def add_notes():
     while True:
         file = "notes.json"
-        note = input("Write your notes: ")
+        note = input("Write your notes: \n")
         data = {
             "file": file,
             "note": note
@@ -138,13 +138,15 @@ def add_questions():
 def clear_file():
     with open('notes.json', 'w') as file:
         json.dump([], file)       
+
 #####################################################################################################################
 # PAGE FUNCTIONS
     
 def home_page():
     print('-' * terminal_width)
     print(program_name, "\n")
-    print("You will be able to choose your variables to create custom visualizations of our snowstorm dataset.\n")
+    print("You will be able to choose your plotting style to create custom visualizations of our snowstorm dataset.")
+    print("The progam also contains features to learn about different plotting styles, add/view/delete your notes, and ask questions about data analyis.\n")
     print("Page Options:")
     print("0. Home Page: view your page options")
     print("1. Example Visuals: view example visuals we've made!")
@@ -279,7 +281,6 @@ print(logo6)
 print(program_name, "\n")
 print()
 print("Welcome to SnowStorm, a CLI program to create customizable visualizations of snowstorms in NW Oregon and SW Washington by choosing your plotting style.\n")
-print("The progam also contains features to learn about different plotting styles, add/view/delete your notes, and ask questions about data analyis.")
 
 user_input = int(home_page())
 while True:
